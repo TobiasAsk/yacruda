@@ -1,0 +1,29 @@
+version: "3.4"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      target: run
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/backend.env
+    volumes:
+      - ./backend/app:/db-experiment/app
+
+  frontend:
+    build: 
+      context: ./frontend
+      target: build
+    ports:
+      - "4200:4200"
+    volumes: 
+      - ./frontend:/books-app
+
+  nginx:
+    image: nginx:1.17-alpine
+    volumes: 
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports: 
+      - "80:80"
