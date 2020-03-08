@@ -1,6 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { BooksComponent } from './books/books.component';
+import { BookEditorComponent } from './book-editor/book-editor.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -10,7 +11,8 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        BooksComponent
+        BooksComponent,
+        BookEditorComponent
       ],
       imports: [HttpClientTestingModule, FormsModule]
     }).compileComponents();

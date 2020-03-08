@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { BooksComponent } from './books.component';
+import { BookEditorComponent } from '../book-editor/book-editor.component';
 import { BookService } from '../book.service';
 import { of } from 'rxjs';
 
@@ -21,7 +22,8 @@ describe('BooksComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        BooksComponent
+        BooksComponent,
+        BookEditorComponent
       ],
       providers: [{ provide: BookService, useValue: bookService }],
       imports: [FormsModule]
