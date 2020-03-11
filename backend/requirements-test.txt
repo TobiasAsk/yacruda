@@ -6,3 +6,4 @@ Flask-Cors==3.0.8
 pytest==5.3.5
 coverage==5.0.3
 PyHamcrest==2.0.0
+codecov==2.0.16
