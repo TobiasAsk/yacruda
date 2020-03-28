@@ -1,7 +1,9 @@
 language: python
 install:
   - pip install -r backend/requirements-test.txt
+before_script:
+  - cd backend
 script:
-  - coverage run -m pytest backend
+  - coverage run -m pytest
 after_success:
   - codecov
