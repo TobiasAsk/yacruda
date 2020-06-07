@@ -9,54 +9,43 @@ import { BookService } from '../book.service';
 export class BooksComponent implements OnInit {
 
   books: Book[];
-  showingEditor: boolean;
   activeBook: Book;
 
   constructor(private bookService: BookService) { }
 
   ngOnInit() {
     this.bookService.getBooks().subscribe(books => this.books = books);
-    this.resetActiveBook();
   }
 
-  submitBook() {
-    if (this.activeBook.uid) {
-      this.bookService.updateBook(this.activeBook).subscribe(response => {
-        if (response.ok) {
-          const oldBook = this.books.find(b => b.uid == this.activeBook.uid);
-          Object.assign(oldBook, this.activeBook);
-          this.hideBookEditor();
-        }
+  onSubmitBook(book: Book) {
+    if (book.uid) {
+      this.bookService.updateBook(book).subscribe(response => {
       });
     } else {
-      this.bookService.addBook(this.activeBook).subscribe(response => {
+      this.bookService.addBook(book).subscribe(response => {
         if (response.ok && response.body.id) {
-          this.activeBook.uid = response.body.id;
-          this.books.push(this.activeBook);
-          this.hideBookEditor();
+          book.uid = response.body.id;
+          this.books.push(book);
         }
       });
     }
+    this.setActiveBook(null);
   }
 
-  hideBookEditor() {
-    this.resetActiveBook();
-    this.showingEditor = false;
-  }
-
-  showBookEditor() {
-    this.showingEditor = true;
-  }
-
-  resetActiveBook() {
-    this.activeBook = {
-
-    } as Book;
+  setActiveBook(book: Book) {
+    this.activeBook = book;
   }
 
   onSelectBook(book: Book) {
-    this.activeBook = JSON.parse(JSON.stringify(book));
-    this.showBookEditor();
+    this.setActiveBook(book);
+  }
+
+  onClose(event: any) {
+    this.setActiveBook(null);
+  }
+
+  addNewBook() {
+    this.setActiveBook({} as Book);
   }
 
 }

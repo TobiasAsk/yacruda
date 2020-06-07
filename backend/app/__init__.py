@@ -3,10 +3,9 @@ from flask_cors import CORS
 
 from app.blueprint import Books
 from app.model import init_app
-from app.service import BookService
 
 
-def create_app(config=None):
+def create_app(config=None) -> Flask:
     app = Flask(__name__)
     CORS(app)
 
@@ -15,7 +14,7 @@ def create_app(config=None):
     else:
         app.config.from_pyfile('config.py', silent=False)
 
-    app.register_blueprint(Books(BookService()))
+    app.register_blueprint(Books())
     init_app(app)
 
     return app

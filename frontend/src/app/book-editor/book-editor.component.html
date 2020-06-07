@@ -1,12 +1,35 @@
-<div class="field">
-    <label class="label">Title</label>
-    <div class="control">
-        <input class="input" type="text" placeholder="Text input" [(ngModel)]="book.title">
-    </div>
-</div>
-<div class="field">
-    <label class="label">Genre</label>
-    <div class="control">
-        <input class="input" type="text" placeholder="Text input" [(ngModel)]="book.genre">
-    </div>
+<div class="modal-background" (click)="closeEditor()"></div>
+<div class="modal-card">
+
+    <header class="modal-card-head">
+        <p class="modal-card-title">Edit book</p>
+        <button class="delete" (click)="closeEditor()"></button>
+    </header>
+
+    <section class="modal-card-body">
+
+        <form [formGroup]="bookForm">
+
+            <div class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="title">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Genre</label>
+                <div class="control">
+                    <input class="input" type="text" formControlName="genre">
+                </div>
+            </div>
+
+        </form>
+    </section>
+
+    <footer class="modal-card-foot">
+        <button class="button is-success" (click)="onSubmit()">Submit</button>
+        <button class="button" (click)="closeEditor()">Cancel</button>
+    </footer>
+
 </div>

@@ -11,12 +11,12 @@ from app.service import BookService
 
 class Books(Blueprint):
 
-    def __init__(self, book_service: BookService):
+    def __init__(self):
         super().__init__('book_blueprint', __name__, url_prefix='/api/books')
         self.add_url_rule('', 'books', self.books, methods=['GET', 'POST'])
         self.add_url_rule('/<book_uid>', 'book', self.book,
                           methods=['GET', 'PUT'])
-        self.book_service = book_service
+        self.book_service = BookService()
         self.book_schema = BookSchema(exclude=['id'])
 
     def books(self):
@@ -32,7 +32,7 @@ class Books(Blueprint):
                 return {
                     'status': 'error',
                     'error': validation_error.messages
-                }, HTTPStatus.BAD_REQUEST
+                }, HTTPStatus.UNPROCESSABLE_ENTITY
 
             uid = self.book_service.add_book(book_to_add)
 
@@ -42,8 +42,8 @@ class Books(Blueprint):
 
         return {
             'status': 'error',
-            'error': 'Request method not supported'
-        }, HTTPStatus.BAD_REQUEST
+            'error': 'Request body type not supported'
+        }, HTTPStatus.UNSUPPORTED_MEDIA_TYPE
 
     def book(self, book_uid: str):
         book = self.book_service.get_book(book_uid)
@@ -66,7 +66,7 @@ class Books(Blueprint):
                 return {
                     'status': 'error',
                     'error': validation_error.messages
-                }, HTTPStatus.BAD_REQUEST
+                }, HTTPStatus.UNPROCESSABLE_ENTITY
 
             return {
                 'status': 'Book updated'
@@ -74,8 +74,8 @@ class Books(Blueprint):
 
         return {
             'status': 'error',
-            'error': 'Request method not supported'
-        }, HTTPStatus.BAD_REQUEST
+            'error': 'Request body type not supported'
+        }, HTTPStatus.UNSUPPORTED_MEDIA_TYPE
 
     def created_book_headers(self, book: Book) -> dict:
         return {

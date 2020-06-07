@@ -1,24 +1,6 @@
-<div *ngIf="showingEditor" class="modal is-active">
-    <div class="modal-background" (click)="hideBookEditor()"></div>
-    <div class="modal-card">
-        <header class="modal-card-head">
-            <p class="modal-card-title">Edit book</p>
-            <button class="delete" (click)="hideBookEditor()"></button>
-        </header>
-        <section class="modal-card-body">
-            <app-book-editor [book]="activeBook"></app-book-editor>
-        </section>
-        <footer class="modal-card-foot">
-            <div class="field is-grouped is-grouped-right">
-                <p class="control">
-                    <a class="button is-primary" (click)="submitBook()">Submit</a>
-                </p>
-                <p class="control">
-                    <a class="button is-light" (click)="hideBookEditor()">Cancel</a>
-                </p>
-            </div>
-        </footer>
-    </div>
+<div *ngIf="activeBook" class="modal is-active">
+    <app-book-editor (submitBook)="onSubmitBook($event)" (close)="onClose($event)" [book]="activeBook">
+    </app-book-editor>
 </div>
 
 <div class="container book-wrapper">
@@ -30,5 +12,5 @@
 </div>
 
 <div class="container">
-    <button class="button is-primary" (click)="showBookEditor()">Add book</button>
+    <button class="button is-primary" (click)="addNewBook()">Add book</button>
 </div>
